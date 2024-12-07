@@ -39,7 +39,7 @@ class ToolPurchaseController extends Controller
                 $purchase->login = $tool->login;
                 $purchase->pass = $tool->pass;
                 $purchase->price = $tool->price;
-                $purchase->resseller = $tool->resseller;
+                $purchase->reseller = $tool->reseller;
                 $purchase->save();
             });
 
