@@ -31,11 +31,12 @@ class ReplyController extends Controller
                     </div>
                 </div>';
 
-            $ticket->memo = $ticket->memo . $msg;
-            $ticket->seen = 0;
-            $ticket->lastreply = $uid;
-            $ticket->lastup = Carbon::now();
-            $ticket->save();
+            $ticket->update([
+                'memo' => $ticket->memo . $msg,
+                'seen' => 0,
+                'lastreply' => $uid,
+                'lastup' => Carbon::now(),
+            ]);
         }
 
         return response()->json(['success' => true]);
