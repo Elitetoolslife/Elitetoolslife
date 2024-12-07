@@ -61,7 +61,8 @@ Route::get('/Payment', [HomeController::class, 'payment']);
 Route::post('/tickets', [App\Http\Controllers\TicketController::class, 'store'])->name('tickets.store');
 Route::get('/add-balance', [App\Http\Controllers\BalanceController::class, 'showForm'])->name('balance.form');
 Route::post('/add-balance', [App\Http\Controllers\BalanceController::class, 'addBalance'])->name('balance.add');
-
+Route::post('/buy-tool', [App\Http\Controllers\ToolPurchaseController::class, 'buyTool'])->name('tool.buy');
+```
 
 
 
