@@ -1,16 +1,51 @@
-## Hi there 👋
-
-<!--
-**Elitetoolslife/Elitetoolslife** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
-
-Here are some ideas to get you started:
-
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+app/
+    Http/
+        Controllers/
+            Auth/
+                LoginController.php
+                RegisterController.php
+            Buyer/
+                DashboardController.php
+                OrderController.php
+            Actions/
+                AddBalanceActionController.php
+                PaymentActionController.php
+                TicketActionController.php
+            Api/
+                UserController.php
+                PaymentController.php
+resources/
+    views/
+        layouts/
+            app.blade.php
+        partials/
+            header.blade.php
+            footer.blade.php
+        auth/
+            login.blade.php
+            register.blade.php
+        buyer/
+            index.blade.php
+            dashboard.blade.php
+            orders.blade.php
+            profile.blade.php
+            tickets.blade.php
+        actions/
+            addBalanceAction.blade.php
+            paymentAction.blade.php
+            addReplyAction.blade.php
+        admin/
+            dashboard.blade.php
+            users.blade.php
+        errors/
+            404.blade.php
+            500.blade.php
+    public/
+        css/
+        js/
+        images/
+    routes/
+        web.php
+        api.php
+    storage/
+    database/
