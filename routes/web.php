@@ -56,7 +56,48 @@ Route::get('/Check', [HomeController::class, 'check']);
 Route::get('/PMCheck', [HomeController::class, 'pmCheck']);
 Route::get('/Payment', [HomeController::class, 'payment']);
 
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
 
+Route::view('/seller', 'layouts.seller');
+Route::view('/master', 'layouts.master');
+Route::view('/auth', 'layouts.auth');
+Route::view('/admin', 'layouts.admin');
+Route::view('/app', 'layouts.app');
+
+Route::view('/header', 'partials.header');
+Route::view('/footer', 'partials.footer');
+Route::view('/admin/navbar', 'partials.admin.navbar-nav');
+Route::view('/admin/sidebar', 'partials.admin.sidebar-nav');
+
+Route::view('/login', 'auth.login');
+Route::view('/register', 'auth.register');
+
+Route::view('/buyer/index', 'buyer.index');
+Route::view('/buyer/dashboard', 'buyer.dashboard');
+Route::view('/buyer/orders', 'buyer.orders');
+Route::view('/buyer/profile', 'buyer.profile');
+Route::view('/buyer/tickets', 'buyer.tickets');
+
+Route::view('/actions/addBalance', 'actions.addBalanceAction');
+Route::view('/actions/payment', 'actions.paymentAction');
+Route::view('/actions/addReply', 'actions.addReplyAction');
+Route::view('/actions/withdrawalRequest', 'actions.WithdrawalRequestAction');
+
+
+
+Route::view('/admin/dashboard', 'admin.dashboard');
+Route::view('/admin/users', 'admin.users');
+
+
+Route::view('/seller/dashboard', 'seller.dashboard');
+Route::view('/seller/withdrawal-request', 'seller.withdrawal-request');
+Route::view('/seller/withdrawal-request', 'seller.withdrawal-request');
+
+
+
+Route::view('/404', 'errors.404');
+Route::view('/500', 'errors.500');
 
 
 Route::post('/tickets', [App\Http\Controllers\TicketController::class, 'store'])->name('tickets.store');
