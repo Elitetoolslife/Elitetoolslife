@@ -14,7 +14,7 @@ class ReplyController extends Controller
         $user_id = Auth::user()->id;
         $rep = $request->input('Reply');
         
-        if (empty($rep)) {
+        if (empty($report)) {
             return response("01", 400);
         }
 
@@ -24,7 +24,7 @@ class ReplyController extends Controller
             $msg = '
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        <div class="ticket">' . htmlspecialchars($rep) . '</div>
+                        <div class="ticket">' . htmlspecialchars($report) . '</div>
                     </div>
                     <div class="panel-footer">
                         <div class="label label-info">' . $user_id . '</div> - ' . Carbon::now()->format('d/m/Y h:i:s a') . '
