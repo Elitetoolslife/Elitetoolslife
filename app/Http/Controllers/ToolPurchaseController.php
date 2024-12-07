@@ -1,4 +1,4 @@
- <?php
+<?php
 
 namespace App\Http\Controllers;
 
@@ -8,7 +8,6 @@ use App\Models\Purchase;
 use App\Models\Reseller;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 class ToolPurchaseController extends Controller
 {
@@ -18,30 +17,28 @@ class ToolPurchaseController extends Controller
         $tool = Tool::find($request->id);
 
         if ($user->balance >= $tool->price) {
-            DB::transaction(function () use ($user, $tool) {
-                $user->balance -= $tool->price;
-                $user->ipurchassed += 1;
-                $user->save();
+            $user->decrement('balance', $tool->price);
+            $user->increment('ipurchassed');
 
-                $tool->sold = 1;
-                $tool->sto = $user->username;
-                $tool->dateofsold = now();
-                $tool->save();
+            $tool->update([
+                'sold' => 1,
+                'sto' => $user->username,
+                'dateofsold' => now(),
+            ]);
 
-                $purchase = new Purchase();
-                $purchase->s_id = $tool->id;
-                $purchase->buyer = $user->username;
-                $purchase->type = $tool->acctype;
-                $purchase->date = now();
-                $purchase->country = $tool->country;
-                $purchase->infos = $tool->infos;
-                $purchase->url = $tool->url;
-                $purchase->login = $tool->login;
-                $purchase->pass = $tool->pass;
-                $purchase->price = $tool->price;
-                $purchase->reseller = $tool->reseller;
-                $purchase->save();
-            });
+            Purchase::create([
+                's_id' => $tool->id,
+                'buyer' => $user->username,
+                'type' => $tool->acctype,
+                'date' => now(),
+                'country' => $tool->country,
+                'infos' => $tool->infos,
+                'url' => $tool->url,
+                'login' => $tool->login,
+                'pass' => $tool->pass,
+                'price' => $tool->price,
+                'reseller' => $tool->reseller,
+            ]);
 
             return redirect()->route('order.show', ['id' => $tool->id]);
         } else {
