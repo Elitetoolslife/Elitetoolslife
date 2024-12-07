@@ -1,4 +1,4 @@
-Refactor to laravel <?php
+<?php
 
 namespace App\Http\Controllers;
 
