@@ -11,30 +11,30 @@ class ReplyController extends Controller
 {
     public function addReply(Request $request, $id)
     {
-        $user_id = Auth::user()->id;
+        $uid = Auth::user()->id;
         $rep = $request->input('Reply');
         
-        if (empty($report)) {
+        if (empty($rep)) {
             return response("01", 400);
         }
 
-        $ticket = Ticket::where('id', $id)->where('user_id', $user_id)->first();
+        $ticket = Ticket::where('id', $id)->where('uid', $uid)->first();
 
         if ($ticket && $ticket->status == 1) {
             $msg = '
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        <div class="ticket">' . htmlspecialchars($report) . '</div>
+                        <div class="ticket">' . htmlspecialchars($rep) . '</div>
                     </div>
                     <div class="panel-footer">
-                        <div class="label label-info">' . $user_id . '</div> - ' . Carbon::now()->format('d/m/Y h:i:s a') . '
+                        <div class="label label-info">' . $uid . '</div> - ' . Carbon::now()->format('d/m/Y h:i:s a') . '
                     </div>
                 </div>';
 
             $ticket->update([
                 'memo' => $ticket->memo . $msg,
                 'seen' => 0,
-                'lastreply' => $user_id,
+                'lastreply' => $uid,
                 'lastup' => Carbon::now(),
             ]);
         }
