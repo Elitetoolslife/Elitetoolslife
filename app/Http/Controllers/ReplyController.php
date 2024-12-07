@@ -27,14 +27,14 @@ class ReplyController extends Controller
                         <div class="ticket">' . htmlspecialchars($rep) . '</div>
                     </div>
                     <div class="panel-footer">
-                        <div class="label label-info">' . $user_ido . '</div> - ' . Carbon::now()->format('d/m/Y h:i:s a') . '
+                        <div class="label label-info">' . $user_id . '</div> - ' . Carbon::now()->format('d/m/Y h:i:s a') . '
                     </div>
                 </div>';
 
             $ticket->update([
                 'memo' => $ticket->memo . $msg,
                 'seen' => 0,
-                'lastreply' => $user_ido,
+                'lastreply' => $user_id,
                 'lastup' => Carbon::now(),
             ]);
         }
