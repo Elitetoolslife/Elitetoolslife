@@ -17,7 +17,7 @@ use App\Models\Bank;
 use App\Models\Scampage;
 use App\Models\Tutorial;
 
-class DashboardController extends Controller
+class indexController extends Controller
 {
     public function index()
     {
@@ -25,13 +25,13 @@ class DashboardController extends Controller
         $tickets = Ticket::where('status', 1)->where('uid', $usrid)->count();
         $reports = Report::where('status', 1)->where('uid', $usrid)->count();
         $balance = User::where('id', $usrid)->value('balance');
-        $rdp = Rdp::where('sold', 0)->count();
-        $shell = Stuff::where('sold', 0)->count();
-        $cpanel = Cpanel::where('sold', 0)->count();
-        $mailer = Mailer::where('sold', 0)->count();
-        $smtp = Smtp::where('sold', 0)->count();
+        $rdps = Rdp::where('sold', 0)->count();
+        $shells = Stuff::where('sold', 0)->count();
+        $cpanels = Cpanel::where('sold', 0)->count();
+        $mailers = Mailer::where('sold', 0)->count();
+        $smtps = Smtp::where('sold', 0)->count();
         $leads = Lead::where('sold', 0)->count();
-        $premium = Account::where('sold', 0)->count();
+        $premiums = Account::where('sold', 0)->count();
         $banks = Bank::where('sold', 0)->count();
         $scams = Scampage::count();
         $tutorials = Tutorial::count();
@@ -43,13 +43,13 @@ class DashboardController extends Controller
             'tickets' => $tickets,
             'reports' => $reports,
             'balance' => $balance,
-            'rdp' => $rdp,
-            'shell' => $shell,
-            'cpanel' => $cpanel,
-            'mailer' => $mailer,
-            'smtp' => $smtp,
+            'rdp' => $rdps,
+            'shell' => $shells,
+            'cpanel' => $cpanels,
+            'mailer' => $mailers,
+            'smtp' => $smtps,
             'leads' => $leads,
-            'premium' => $premium,
+            'premium' => $premiums,
             'banks' => $banks,
             'scams' => $scams,
             'tutorials' => $tutorials,
