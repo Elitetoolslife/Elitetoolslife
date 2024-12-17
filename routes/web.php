@@ -3,6 +3,115 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BalanceController;
 use App\Http\Controllers\HomeController;
+<?php
+
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Auth\NewPasswordController;
+use App\Http\Controllers\Auth\PasswordResetLinkController;
+use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Controllers\Admin\AdminHomeController;
+use App\Http\Controllers\Admin\UserHomeController;
+use App\Http\Controllers\User\DashboardController;
+pppp App\Http\Controllers\User\ProfileController;
+use App\Http\Controllers\User\BalanceController;
+use App\Http\Controllers\TicketController;
+use App\Http\Controllers\ReportController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\HomeController;
+
+/*
+|--------------------------------------------------------------------------
+| Guest Routes - Unauthenticated Users Only
+|--------------------------------------------------------------------------
+*/
+Route::middleware('guest')->group(function () {
+    Route::post('/register', [RegisteredUserController::class, 'store'])->name('register');
+    Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
+    Route::post('/forgot-password', [PasswordResetLinkController::class, 'store'])->name('password.email');
+    Route::post('/reset-password', [NewPasswordController::class, 'store'])->name('password.store');
+});
+
+/*
+|--------------------------------------------------------------------------
+| Authenticated Routes - Accessible to Logged-In Users Only
+|--------------------------------------------------------------------------
+*/
+Route::middleware('auth')->group(function () {
+    // Profile Management
+    Route::get('/profile/settings', [ProfileController::class, 'showSettings'])->name('profile.settings');
+    Route::post('/profile/settings/update', [ProfileController::class, 'updateSettings'])->name('profile.settings.update');
+    Route::post('/profile/settings/password', [ProfileController::class, 'updatePassword'])->name('profile.settings.password');
+
+    // Logout Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
+});
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+*/
+Route::get('/', function () {
+    return view('welcome');
+})->name('home');
+
+/*
+|--------------------------------------------------------------------------
+| Admin Routes Group
+|--------------------------------------------------------------------------
+*/
+Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(function () {
+    Route::get('/dashboard', [AdminHomeController::class, 'index'])->name('dashboard');
+    Route::resource('users', AdminUserController::class)->only(['index', 'show', 'edit', 'update', 'destroy']);
+});
+
+/*
+|--------------------------------------------------------------------------
+| User Routes Group
+|--------------------------------------------------------------------------
+*/
+Route::prefix('user')->name('user.')->middleware(['auth', 'verified'])->group(function () {
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
+    Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
+    Route::get('/balance', [BalanceController::class, 'showForm'])->name('balance.form');
+    Route::post('/balance', [BalanceController::class, 'submit'])->name('balance.submit');
+});
+
+/*
+|--------------------------------------------------------------------------
+| Tickets Routes
+|--------------------------------------------------------------------------
+*/
+Route::prefix('tickets')->name('tickets.')->middleware('auth')->group(function () {
+    Route::get('/', [TicketController::class, 'index'])->name('index');
+    Route::get('/create', [TicketController::class, 'create'])->name('create');
+    Route::get('/{id}', [TicketController::class, 'show'])->name('show');
+});
+
+/*
+|--------------------------------------------------------------------------
+| Reports Routes
+|--------------------------------------------------------------------------
+*/
+Route::prefix('reports')->name('reports.')->middleware('auth')->group(function () {
+    Route::get('/', [ReportController::class, 'index'])->name('index');
+    Route::get('/generate', [ReportController::class, 'generate'])->name('generate');
+    Route::get('/tickets', [ReportController::class, 'tickets'])->name('tickets');
+    Route::get('/tickets/bitcoin-history', [ReportController::class, 'bitcoinHistory'])->name('bitcoin.history');
+});
+
+/*
+|--------------------------------------------------------------------------
+| Orders Routes
+|--------------------------------------------------------------------------
+*/
+Route::prefix('orders')->name('orders.')->middleware('auth')->group(function () {
+    Route::get('/', [OrderController::class, 'index'])->name('index');
+    Route::get('/create', [OrderController::class, 'create'])->name('create');
+    Route::get('/{id}', [OrderController::class, 'show'])->name('show');
+});
+
 
 Route::get('/index', [HomeController::class, 'index']);
 Route::get('/ajaxinfo', [HomeController::class, 'ajaxinfo']);
