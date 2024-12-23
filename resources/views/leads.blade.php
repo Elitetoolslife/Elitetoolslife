@@ -116,7 +116,33 @@
 
     function buyLead(id) {
         $.get(`{{ url('/leads/buy') }}/${id}`, function (response) {
-            alert(response.message);
+            if (response.success) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: response.message,
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Insufficient Balance',
+                    text: response.message,
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+
+                // Show toast for insufficient balance
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'error',
+                    title: 'Not enough balance',
+                    showConfirmButton: false,
+                    toast: true,
+                    timer: 3000
+                });
+            }
         });
     }
 
