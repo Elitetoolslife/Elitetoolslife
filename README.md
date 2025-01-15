@@ -140,7 +140,7 @@ class CreateFeluxTables extends Migration
             $table->timestamps();
         });
 
-        Schema::create('payment', function (Blueprint $table) {
+        Schema::create('payments', function (Blueprint $table) {
             $table->increments('id');
             $table->string('user');
             $table->string('method');
@@ -199,16 +199,16 @@ class CreateFeluxTables extends Migration
             $table->timestamps();
         });
 
-        Schema::create('resseller', function (Blueprint $table) {
+        Schema::create('ressellers', function (Blueprint $table) {
             $table->increments('id');
             $table->string('username');
-            $table->integer('unsoldb');
-            $table->integer('soldb');
-            $table->integer('isold');
-            $table->integer('iunsold');
+            $table->string('unsoldb')->default('0');
+            $table->string('soldb')->default('0');
+            $table->string('isoldb')->default('0');
+            $table->string('iunsold')->default('0');
             $table->text('activate');
             $table->text('btc');
-            $table->text('withdrawal');
+            $table->text('withdrawal')->default('not_request');
             $table->integer('allsales')->nullable();
             $table->integer('lastweek')->nullable();
             $table->timestamps();
@@ -307,11 +307,11 @@ class CreateFeluxTables extends Migration
             $table->string('password');
             $table->string('email');
             $table->integer('balance')->default(0);
-            $table->text('ipurchassed')->nullable();
+            $table->integer('ipurchassed')->default(0);
             $table->text('ip')->nullable();
             $table->date('lastlogin')->nullable();
             $table->date('datereg')->nullable();
-            $table->integer('resseller');
+            $table->integer('resseller')->default(0);
             $table->text('img')->nullable();
             $table->string('testemail')->nullable();
             $table->integer('resetpin')->default(0);
